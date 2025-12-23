@@ -63,12 +63,12 @@ export const EventCard = ({ event, onUpdate }: EventCardProps) => {
       <div className="mt-auto pt-3 flex gap-2">
         {!isDone && !isFuture && (
           <>
-            <button onClick={() => onUpdate(event.id, { status: 'completed' })} className={`flex-1 py-1.5 text-xs rounded border transition-colors font-medium ${theme.btn}`}>Complete</button>
-            <button onClick={() => onUpdate(event.id, { status: 'skipped' })} className="px-3 py-1.5 text-xs text-zinc-500 hover:text-zinc-300 border border-transparent hover:border-zinc-800 rounded">Skip</button>
+            <button onClick={() => onUpdate(event.id, { status: 'completed' })} className={`flex-1 py-1.5 text-xs rounded border transition-colors font-medium ${theme.btn} cursor-pointer`}>Complete</button>
+            <button onClick={() => onUpdate(event.id, { status: 'skipped' })} className="px-3 py-1.5 text-xs text-zinc-500 hover:text-zinc-300 border border-transparent hover:border-zinc-800 rounded cursor-pointer">Skip</button>
           </>
         )}
         {isDone && (
-          <button onClick={() => onUpdate(event.id, { status: 'active' })} className="ml-auto text-xs text-zinc-500 hover:text-zinc-300 underline">Undo</button>
+          <button onClick={() => onUpdate(event.id, { status: 'active' })} className="ml-auto text-xs text-zinc-500 hover:text-zinc-300 underline cursor-pointer">Undo</button>
         )}
       </div>
     </div>

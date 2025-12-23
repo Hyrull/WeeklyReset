@@ -107,8 +107,8 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
               {/* EDIT MODE OVERLAY */}
               {isEditMode && (
                 <div className="absolute top-4 right-4 flex gap-2 z-10">
-                   <button onClick={() => openEdit(e)} className="bg-blue-600 text-white text-xs px-3 py-1 rounded shadow hover:bg-blue-500">Edit</button>
-                   <button onClick={() => handleDelete(e.id)} className="bg-red-600 text-white text-xs px-3 py-1 rounded shadow hover:bg-red-500">Del</button>
+                   <button onClick={() => openEdit(e)} className="bg-blue-600 text-white text-xs px-3 py-1 rounded shadow hover:bg-blue-500 cursor-pointer">Edit</button>
+                   <button onClick={() => handleDelete(e.id)} className="bg-red-600 text-white text-xs px-3 py-1 rounded shadow hover:bg-red-500 cursor-pointer">Del</button>
                 </div>
               )}
             </div>
@@ -134,7 +134,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
               <button
                 key={opt}
                 onClick={() => setSortBy(opt as SortOption)}
-                className={`px-3 py-1.5 text-xs rounded capitalize transition-colors ${sortBy === opt ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
+                className={`px-3 py-1.5 text-xs rounded capitalize transition-colors cursor-pointer ${sortBy === opt ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
               >
                 {opt === 'urgency' ? 'Expiring' : opt === 'startDate' ? 'Start Date' : opt}
               </button>
@@ -145,7 +145,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
           
           {/* Toggles */}
           <label className="flex items-center gap-2 text-xs text-zinc-400 cursor-pointer select-none hover:text-zinc-200">
-            <input type="checkbox" checked={showSkipped} onChange={e => setShowSkipped(e.target.checked)} className="accent-emerald-500 rounded bg-zinc-800 border-zinc-700" />
+            <input type="checkbox" checked={showSkipped} onChange={e => setShowSkipped(e.target.checked)} className="accent-emerald-500 rounded bg-zinc-800 border-zinc-700 cursor-pointer" />
             Show Skipped
           </label>
 
@@ -154,7 +154,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
           {/* EDIT MODE TOGGLE */}
           <button 
             onClick={() => setIsEditMode(!isEditMode)}
-            className={`px-3 py-1.5 text-xs font-bold rounded transition-colors ${isEditMode ? 'bg-amber-500/20 text-amber-500 border border-amber-500/50' : 'text-zinc-500 hover:text-zinc-300'}`}
+            className={`px-3 py-1.5 text-xs font-bold rounded transition-colors cursor-pointer ${isEditMode ? 'bg-amber-500/20 text-amber-500 border border-amber-500/50' : 'text-zinc-500 hover:text-zinc-300'}`}
           >
             {isEditMode ? 'Done Editing' : 'Manage'}
           </button>

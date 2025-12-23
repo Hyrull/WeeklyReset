@@ -57,7 +57,7 @@ export default function EventModal({ isOpen, onClose, onSave, initialData, isEdi
           <div>
             <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">Game</label>
             <select 
-              className={`w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-sm text-zinc-200 ${theme.borderFocus} outline-none`}
+              className={`w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-sm text-zinc-200 ${theme.borderFocus} outline-none cursor-pointer`}
               value={formData.game}
               onChange={e => set('game', e.target.value)}
             >
@@ -82,7 +82,7 @@ export default function EventModal({ isOpen, onClose, onSave, initialData, isEdi
              <div>
                 <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">Type</label>
                 <select 
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-sm text-zinc-200"
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-sm text-zinc-200 cursor-pointer"
                   value={formData.type}
                   onChange={e => set('type', e.target.value)}
                 >
@@ -92,7 +92,7 @@ export default function EventModal({ isOpen, onClose, onSave, initialData, isEdi
              <div>
                 <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">Status</label>
                 <select 
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-sm text-zinc-200"
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-sm text-zinc-200 cursor-pointer"
                   value={formData.status}
                   onChange={e => set('status', e.target.value)}
                 >
@@ -129,8 +129,8 @@ export default function EventModal({ isOpen, onClose, onSave, initialData, isEdi
           </div>
 
           <div className="pt-4 flex gap-3">
-             <button type="button" onClick={onClose} className="flex-1 py-2 text-sm text-zinc-400 hover:text-white">Cancel</button>
-             <button type="submit" className={`flex-1 py-2 rounded text-sm font-bold bg-zinc-100 text-black hover:bg-white`}>
+             <button type="button" onClick={onClose} className="flex-1 py-2 text-sm text-zinc-400 hover:text-white cursor-pointer">Cancel</button>
+             <button type="submit" className={`flex-1 py-2 rounded text-sm font-bold bg-zinc-100 text-black hover:bg-white cursor-pointer`}>
                {isEditing ? 'Save Changes' : 'Create Event'}
              </button>
           </div>
