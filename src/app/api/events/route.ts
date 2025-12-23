@@ -1,42 +1,53 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs/promises'
-import path from 'path'
-
-const DB_PATH = path.join(process.cwd(), 'data', 'events.json')
+import { getEvents, saveEvents, EventSchema } from '@/lib/data'
+import { z } from 'zod'
 
 export async function GET() {
-  try {
-    const data = await fs.readFile(DB_PATH, 'utf-8')
-    return NextResponse.json(JSON.parse(data))
-  } catch (error) {
-    return NextResponse.json([], { status: 200 })
-  }
+  const events = await getEvents()
+  return NextResponse.json(events)
 }
+
+// Schema for the PATCH request (updating a single item)
+const UpdateSchema = z.object({
+  id: z.string(),
+  // We're now only allowing ot edit this
+  ...EventSchema.pick({ status: true, notes: true }).partial().shape
+})
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { id, status, notes } = body
+    
+    // 1. Validate Input
+    // If body is garbage, this throws an error immediately
+    const { id, ...updates } = UpdateSchema.parse(body)
 
-    const fileContent = await fs.readFile(DB_PATH, 'utf-8')
-    const events = JSON.parse(fileContent)
+    // 2. Read DB
+    const events = await getEvents()
 
-    const updatedEvents = events.map((event: any) => {
+    // 3. Update Logic
+    let found = false
+    const updatedEvents = events.map(event => {
       if (event.id === id) {
-        // Only update fields that are present in the request
-        return {
-          ...event,
-          status: status !== undefined ? status : event.status,
-          notes: notes !== undefined ? notes : event.notes
-        }
+        found = true
+        return { ...event, ...updates }
       }
       return event
     })
 
-    await fs.writeFile(DB_PATH, JSON.stringify(updatedEvents, null, 2))
+    if (!found) {
+      return NextResponse.json({ error: 'Event ID not found' }, { status: 404 })
+    }
+
+    // 4. Atomic Save
+    await saveEvents(updatedEvents)
     
     return NextResponse.json({ success: true })
+
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to update DB' }, { status: 500 })
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: 'Validation Failed', details: error.issues }, { status: 400 })
+    }
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
