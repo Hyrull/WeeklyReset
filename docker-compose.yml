@@ -1,0 +1,24 @@
+services:
+  weekly-reset:
+    container_name: weekly-reset
+    build:
+      context: .
+      target: deps 
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data
+      
+
+      - ./:/app
+      - /app/node_modules
+      - .next_cache:/app/.next
+    
+    command: npm run dev
+    
+    environment:
+      - NODE_ENV=development
+
+volumes:
+  .next_cache:
