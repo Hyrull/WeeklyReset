@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weekly Reset
 
-## Getting Started
+Weekly reset is a companion web app I made for myself as a way to track the current video game seasons/events/etc. A FOMO visualizator, I guess.
+> This is not available online, however you can self-host this. See below.
 
-First, run the development server:
+---
 
+
+### What it does
+
+- Dashboard: Visual overview of active events sorted by urgency.
+- Status Tracking: Mark events as finished when you're done. (Or press skip)
+- CRUD Management: Add, edit, and delete events directly from the UI.
+- Filtering: Toggle visibility of skipped items and sort by Game, Start Date, or Deadline.
+- Game Themes: Dynamic styling based on the specific game (e.g., colors, logos).
+- Mobile-user friendly (don't check SoT Tracker's commits to see how late it became mobile friendly. At least this time I did it early!)
+
+> This is still WIP! Don't expect a fully fleshed out fancy website. Let me cook.
+
+### How it works
+
+- Next.js 16 (App Router)
+- TypeScript
+- Tailwind CSS
+- Data is handled via a local JSON (no external DB)
+
+
+
+## I want it!!!!
+### Prerequisites
+- Node.js 18+
+- npm or npx
+
+1. Clone the repo:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/weekly-reset.git
+cd weekly-reset
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install the dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create data/events.json, manually or
+```bash
+mkdir data
+echo "[]" > data/events.json
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server:
+```bash
+npm run dev
+```
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Pull Requests
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If you happen to be wishing to help this project, sure, go on. PRs are open. Thanks for the help.
