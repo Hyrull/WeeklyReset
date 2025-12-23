@@ -75,3 +75,6 @@ export const getTheme = (gameName: string): ThemeClasses => {
 
   return GAME_THEMES[matchedKey]
 }
+
+// Yes, the list of supported games is based off what game has a theme. What are you gonna do about it
+export const SUPPORTED_GAMES = Object.keys(GAME_THEMES)

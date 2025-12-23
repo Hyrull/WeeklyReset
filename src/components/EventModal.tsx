@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { GameEvent } from '@/types'
-import { getTheme } from '@/lib/themes'
+import { getTheme, SUPPORTED_GAMES } from '@/lib/themes'
 
 interface EventModalProps {
   isOpen: boolean
@@ -13,14 +13,13 @@ interface EventModalProps {
 }
 
 // Hardcoded for now, but could be dynamic
-const KNOWN_GAMES = ['World of Warcraft', 'Diablo IV', 'Destiny 2', 'Marvel Rivals', 'Fortnite']
 const TYPES = ['season', 'battlepass', 'event']
 
 export default function EventModal({ isOpen, onClose, onSave, initialData, isEditing }: EventModalProps) {
   if (!isOpen) return null
 
   const [formData, setFormData] = useState<Partial<GameEvent>>({
-    game: KNOWN_GAMES[0],
+    game: SUPPORTED_GAMES[0],
     type: 'season',
     status: 'active',
     ...initialData
@@ -61,7 +60,7 @@ export default function EventModal({ isOpen, onClose, onSave, initialData, isEdi
               value={formData.game}
               onChange={e => set('game', e.target.value)}
             >
-              {KNOWN_GAMES.map(g => <option key={g} value={g}>{g}</option>)}
+              {SUPPORTED_GAMES.map(g => <option key={g} value={g}>{g}</option>)}
             </select>
           </div>
 
