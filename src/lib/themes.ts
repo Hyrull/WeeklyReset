@@ -3,6 +3,7 @@ import { ThemeClasses } from '@/types'
 const DEFAULT_THEME: ThemeClasses = {
   border: 'border-emerald-900',
   borderHover: 'hover:border-emerald-500/50',
+  borderFocus: 'focus:border-emerald-500',
   text: 'text-emerald-400',
   bg: 'bg-emerald-900/10',
   btn: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20',
@@ -14,6 +15,7 @@ const DEFAULT_THEME: ThemeClasses = {
 const GAME_THEMES: Record<string, ThemeClasses> = {
   'World of Warcraft': {
     border: 'border-amber-800',
+    borderFocus: 'focus:border-amber-500',
     borderHover: 'hover:border-amber-500/60',
     text: 'text-amber-300',
     bg: 'bg-amber-900/10',
@@ -25,6 +27,7 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
   'Diablo IV': {
     border: 'border-red-900',
     borderHover: 'hover:border-red-500/50',
+    borderFocus: 'focus:border-red-500',
     text: 'text-red-400',
     bg: 'bg-red-900/10',
     btn: 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20',
@@ -35,6 +38,7 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
   'Fortnite': {
     border: 'border-cyan-900',
     borderHover: 'hover:border-cyan-500/50',
+    borderFocus: 'focus:border-cyan-500',
     text: 'text-cyan-400',
     bg: 'bg-cyan-900/10',
     btn: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20 hover:bg-cyan-500/20',
@@ -45,6 +49,7 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
   'Marvel Rivals': {
     border: 'border-red-700',
     borderHover: 'hover:border-red-500',
+    borderFocus: 'focus:border-red-500',
     text: 'text-red-400',
     bg: 'bg-red-950/20',
     btn: 'bg-red-600/20 text-red-300 border-red-500/40 hover:bg-red-600/30',

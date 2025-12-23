@@ -1,6 +1,7 @@
 export interface ThemeClasses {
   border: string
   borderHover: string
+  borderFocus: string
   text: string
   bg: string
   btn: string

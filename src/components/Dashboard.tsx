@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import { GameEvent, SortOption } from '@/types'
 import { EventCard } from '@/components/EventCard'
+import EventModal from '@/components/EventModal'
 
 interface DashboardProps {
   initialEvents: GameEvent[]
@@ -10,19 +11,60 @@ interface DashboardProps {
 
 export default function Dashboard({ initialEvents }: DashboardProps) {
   const [events, setEvents] = useState<GameEvent[]>(initialEvents)
+  
+  // UI State
   const [showSkipped, setShowSkipped] = useState(false)
   const [sortBy, setSortBy] = useState<SortOption>('urgency')
+  
+  // Manager Mode State
+  const [isEditMode, setIsEditMode] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [editingEvent, setEditingEvent] = useState<Partial<GameEvent> | undefined>(undefined)
 
-  const updateEvent = async (id: string, updates: Partial<GameEvent>) => {
-    // Optimistic UI
-    setEvents((prev) => prev.map((e) => (e.id === id ? { ...e, ...updates } : e)))
-    // API Call
-    await fetch('/api/events', { 
-      method: 'POST', 
-      body: JSON.stringify({ id, ...updates }) 
-    })
+  // --- CRUD ACTIONS ---
+
+  // 1. UPDATE (Status/Notes) - Quick actions from card
+  const handleQuickUpdate = async (id: string, updates: Partial<GameEvent>) => {
+    setEvents(prev => prev.map(e => e.id === id ? { ...e, ...updates } : e))
+    await fetch('/api/events', { method: 'PATCH', body: JSON.stringify({ id, ...updates }) })
   }
 
+  // 2. SAVE (Create or Edit from Modal)
+  const handleSave = async (data: Partial<GameEvent>) => {
+    if (editingEvent?.id) {
+      // EDIT EXISTING
+      const updates = { ...data, id: editingEvent.id }
+      setEvents(prev => prev.map(e => e.id === updates.id ? { ...e, ...updates } as GameEvent : e))
+      await fetch('/api/events', { method: 'PATCH', body: JSON.stringify(updates) })
+    } else {
+      // CREATE NEW
+      const res = await fetch('/api/events', { method: 'POST', body: JSON.stringify(data) })
+      const newEvent = await res.json()
+      setEvents(prev => [newEvent, ...prev])
+    }
+    setIsModalOpen(false)
+    setEditingEvent(undefined)
+  }
+
+  // 3. DELETE
+  const handleDelete = async (id: string) => {
+    if (!confirm('Delete this event?')) return
+    setEvents(prev => prev.filter(e => e.id !== id))
+    await fetch(`/api/events?id=${id}`, { method: 'DELETE' })
+  }
+
+  // 4. OPEN MODAL
+  const openNew = () => {
+    setEditingEvent({})
+    setIsModalOpen(true)
+  }
+  
+  const openEdit = (event: GameEvent) => {
+    setEditingEvent(event)
+    setIsModalOpen(true)
+  }
+
+  // --- PROCESSING ---
   const processedData = useMemo(() => {
     const now = new Date()
     let filtered = events.filter(e => showSkipped || e.status !== 'skipped')
@@ -58,7 +100,19 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
            {title}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {items.map(e => <EventCard key={e.id} event={e} onUpdate={updateEvent} />)}
+          {items.map(e => (
+            <div key={e.id} className="relative group">
+              <EventCard event={e} onUpdate={handleQuickUpdate} />
+              
+              {/* EDIT MODE OVERLAY */}
+              {isEditMode && (
+                <div className="absolute top-4 right-4 flex gap-2 z-10">
+                   <button onClick={() => openEdit(e)} className="bg-blue-600 text-white text-xs px-3 py-1 rounded shadow hover:bg-blue-500">Edit</button>
+                   <button onClick={() => handleDelete(e.id)} className="bg-red-600 text-white text-xs px-3 py-1 rounded shadow hover:bg-red-500">Del</button>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     )
@@ -66,6 +120,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
 
   return (
     <div className="max-w-7xl mx-auto">
+      {/* HEADER */}
       <header className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b border-zinc-900 pb-6">
         <div>
           <h1 className="text-3xl font-bold bg-blue-600 bg-clip-text text-transparent">Weekly Reset</h1>
@@ -73,6 +128,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
         </div>
 
         <div className="flex flex-wrap gap-4 items-center bg-zinc-900 p-2 rounded-lg border border-zinc-800">
+          {/* Sort */}
           <div className="flex gap-1 bg-zinc-950 rounded p-1">
             {['urgency', 'game', 'startDate'].map((opt) => (
               <button
@@ -84,14 +140,35 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
               </button>
             ))}
           </div>
+          
           <div className="w-px h-6 bg-zinc-800 mx-2"></div>
+          
+          {/* Toggles */}
           <label className="flex items-center gap-2 text-xs text-zinc-400 cursor-pointer select-none hover:text-zinc-200">
             <input type="checkbox" checked={showSkipped} onChange={e => setShowSkipped(e.target.checked)} className="accent-emerald-500 rounded bg-zinc-800 border-zinc-700" />
             Show Skipped
           </label>
+
+          <div className="w-px h-6 bg-zinc-800 mx-2"></div>
+
+          {/* EDIT MODE TOGGLE */}
+          <button 
+            onClick={() => setIsEditMode(!isEditMode)}
+            className={`px-3 py-1.5 text-xs font-bold rounded transition-colors ${isEditMode ? 'bg-amber-500/20 text-amber-500 border border-amber-500/50' : 'text-zinc-500 hover:text-zinc-300'}`}
+          >
+            {isEditMode ? 'Done Editing' : 'Manage'}
+          </button>
         </div>
       </header>
 
+      {/* ADD NEW button (only in Edit Mode) */}
+      {isEditMode && (
+        <div className="mb-8 p-4 border-2 border-dashed border-zinc-800 rounded-xl flex justify-center items-center hover:border-zinc-700 hover:bg-zinc-900/30 transition-all cursor-pointer" onClick={openNew}>
+           <span className="text-zinc-500 font-bold">+ Add New Event</span>
+        </div>
+      )}
+
+      {/* CONTENT */}
       <div className="space-y-12">
         <Section title="Ongoing" items={processedData.ongoing} color="zinc" />
         <Section title="Incoming" items={processedData.comingSoon} color="zinc" />
@@ -101,6 +178,15 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
           <div className="text-center py-20 text-zinc-600 italic">No active chores found. Time to play?</div>
         )}
       </div>
+
+      {/* MODAL */}
+      <EventModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleSave}
+        initialData={editingEvent || {}}
+        isEditing={!!editingEvent?.id}
+      />
     </div>
   )
 }
