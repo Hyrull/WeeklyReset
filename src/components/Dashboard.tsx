@@ -68,8 +68,8 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
     <div className="max-w-7xl mx-auto">
       <header className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b border-zinc-900 pb-6">
         <div>
-          <h1 className="text-3xl font-bold bg-linear-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">Weekly Reset</h1>
-          <p className="text-zinc-500 mt-1 text-sm">Command Center v1.0</p>
+          <h1 className="text-3xl font-bold bg-blue-600 bg-clip-text text-transparent">Weekly Reset</h1>
+          <p className="text-zinc-500 mt-1 text-sm">Let's get these gaming chores down!</p>
         </div>
 
         <div className="flex flex-wrap gap-4 items-center bg-zinc-900 p-2 rounded-lg border border-zinc-800">

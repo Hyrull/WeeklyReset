@@ -1,5 +1,6 @@
 import { GameEvent } from '@/types'
 import { getTheme } from '@/lib/themes'
+import Image from 'next/image'
 
 interface EventCardProps {
   event: GameEvent
@@ -25,7 +26,14 @@ export const EventCard = ({ event, onUpdate }: EventCardProps) => {
       <div className="flex justify-between items-start">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded bg-zinc-800 overflow-hidden relative">
-             <div className={`w-full h-full ${theme.fallback}`} /> 
+            <div className={`w-full h-full absolute inset-0 ${theme.fallback}`} /> 
+            <Image 
+              src={theme.logo} 
+              alt={event.game}
+              fill
+              className="object-cover"
+              sizes="24px"
+            />
           </div>
           <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">{event.game}</span>
         </div>

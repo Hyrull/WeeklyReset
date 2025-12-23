@@ -40,7 +40,7 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
     btn: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20 hover:bg-cyan-500/20',
     badge: 'bg-cyan-900/40 text-cyan-300 border-cyan-700/50',
     fallback: 'bg-cyan-500/20',
-    logo: '/logos/destiny2.png'
+    logo: '/logos/fortnite.png'
   },
   'Marvel Rivals': {
     border: 'border-red-700',
@@ -51,16 +51,6 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
     badge: 'bg-red-800/50 text-red-200 border-red-600/50',
     fallback: 'bg-red-700/30',
     logo: '/logos/marvelrivals.png'
-  },
-  'Path of Exile 2': {
-    border: 'border-neutral-800',
-    borderHover: 'hover:border-neutral-500/50',
-    text: 'text-neutral-400',
-    bg: 'bg-neutral-900/10',
-    btn: 'bg-neutral-500/10 text-neutral-400 border-neutral-500/20 hover:bg-neutral-500/20',
-    badge: 'bg-neutral-900/40 text-neutral-300 border-neutral-700/50',
-    fallback: 'bg-neutral-500/20',
-    logo: '/logos/poe2.png'
   }
 }
 
