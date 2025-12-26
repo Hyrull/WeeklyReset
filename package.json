@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"node src/scripts/notifier.js\"",
     "build": "next build",
-    "start": "next start",
+    "start": "concurrently \"next start\" \"node src/scripts/notifier.js\"",
     "lint": "eslint"
   },
   "dependencies": {
+    "concurrently": "^9.2.1",
+    "dotenv": "^17.2.3",
     "next": "16.1.1",
+    "node-cron": "^4.2.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "uuid": "^13.0.0",
