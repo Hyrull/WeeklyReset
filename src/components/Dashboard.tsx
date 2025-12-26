@@ -4,6 +4,8 @@ import { useState, useMemo } from 'react'
 import { GameEvent, SortOption } from '@/types'
 import { EventCard } from '@/components/EventCard'
 import EventModal from '@/components/EventModal'
+import Image from 'next/image'
+
 
 interface DashboardProps {
   initialEvents: GameEvent[]
@@ -122,9 +124,18 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
     <div className="max-w-7xl mx-auto">
       {/* HEADER */}
       <header className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b border-zinc-900 pb-6">
-        <div>
-          <h1 className="text-3xl font-bold bg-blue-600 bg-clip-text text-transparent">Weekly Reset</h1>
-          <p className="text-zinc-500 mt-1 text-sm">Let's get these gaming chores down!</p>
+        <div className='flex'>
+          <Image 
+            src={'/logos/default.png'} 
+            alt='Weekly Reset logo'
+            width={64}
+            height={64}
+            className="mr-4"
+          />
+          <div>
+            <h1 className="text-3xl font-bold bg-blue-600 bg-clip-text text-transparent">Weekly Reset</h1>
+            <p className="text-zinc-500 mt-1 text-sm">Let's get these gaming chores down!</p>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-4 items-center bg-zinc-900 p-2 rounded-lg border border-zinc-800">
