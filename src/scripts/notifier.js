@@ -34,13 +34,13 @@ const checkEvents = () => {
 
       // Event Just Started (within last hour)
       if (hoursSinceStart >= 0 && hoursSinceStart < 1) {
-         sendWebhook(event, 'Event Started', 0xffffff)
+         sendWebhook(event, 'Starting', 0xffffff)
       }
 
       // Ends in 3 Days (71h - 72h window)
       // yes, i'm aware that if the bot is down right during the -71-72h window, it won't notify. well. send a pr
       if (hoursUntilEnd >= 71 && hoursUntilEnd < 72) {
-         sendWebhook(event, 'Ending in 3 Days!', 0xffa500)
+         sendWebhook(event, 'Ending', 0xffa500)
       }
     })
 
@@ -60,13 +60,14 @@ const sendWebhook = async (event, title, color) => {
   // Constructing the Embed json
   const embedPayload = {
     embeds: [{
-      title: `${title}: ${event.game}`,
-      description: `**${event.title}**`,
+      title: `${title}: ${event.title}`,
+      description: `**${event.game}** - *${event.title}*`,
       color: color,
       thumbnail: { url: `attachment://${fileName}` }, 
       fields: [
-        { name: 'Ends', value: `<t:${Math.floor(new Date(event.endDate).getTime() / 1000)}:R>`, inline: true },
         { name: 'Type', value: `${event.type}`, inline: true },
+        { name: 'Ends', value: `<t:${Math.floor(new Date(event.endDate).getTime() / 1000)}:R>`, inline: true },
+        { name: 'Dashboard', value: `[Weekly Reset](http://192.168.1.28:3000)`, inline: true },
         ...(event.notes ? [{ name: 'Notes', value: event.notes }] : [])
       ]
     }]
