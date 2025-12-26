@@ -22,7 +22,7 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
     btn: 'bg-amber-600/10 text-amber-300 border-amber-600/30 hover:bg-amber-600/20',
     badge: 'bg-amber-800/40 text-amber-200 border-amber-700/50',
     fallback: 'bg-amber-700/20',
-    logo: '/logos/wow.png'
+    logo: '/logos/worldofwarcraft.png'
   },
   'Diablo IV': {
     border: 'border-red-900',
