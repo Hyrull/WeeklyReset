@@ -12,7 +12,6 @@ interface EventModalProps {
   isEditing?: boolean
 }
 
-// Hardcoded for now, but could be dynamic
 const TYPES = ['season', 'battlepass', 'event', 'info']
 const SORTED_GAMELIST = SUPPORTED_GAMES.sort()
 
@@ -23,6 +22,7 @@ export default function EventModal({ isOpen, onClose, onSave, initialData, isEdi
     game: SUPPORTED_GAMES[0],
     type: 'season',
     status: 'active',
+    notes: '',
     ...initialData
   })
 
@@ -30,7 +30,12 @@ export default function EventModal({ isOpen, onClose, onSave, initialData, isEdi
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    onSave(formData)
+    // status is forced to active if we're making an info
+    const finalData = formData.type === 'info' 
+      ? { ...formData, status: 'active' as const } 
+      : formData
+      
+    onSave(finalData)
     onClose()
   }
 
@@ -77,62 +82,64 @@ export default function EventModal({ isOpen, onClose, onSave, initialData, isEdi
             />
           </div>
 
-          {/* Type & Status Row */}
+          {/* FIELDS HERE */}
           <div className="grid grid-cols-2 gap-4">
+            
+             {/* TYPE */}
              <div>
                 <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">Type</label>
                 <select 
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-sm text-zinc-200 cursor-pointer"
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-sm text-zinc-200 cursor-pointer outline-none"
                   value={formData.type}
                   onChange={e => set('type', e.target.value)}
                 >
                   {TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
              </div>
-             <div>
-                <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">Status</label>
-                <select 
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-sm text-zinc-200 cursor-pointer"
-                  value={formData.status}
-                  onChange={e => set('status', e.target.value)}
-                >
-                  <option value="active">Active</option>
-                  <option value="completed">Completed</option>
-                  <option value="skipped">Skipped</option>
-                </select>
-             </div>
-          </div>
+             
+             {/* STATUS */}
+             {formData.type !== 'info' && (
+               <div>
+                  <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">Status</label>
+                  <select 
+                    className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-sm text-zinc-200 cursor-pointer outline-none"
+                    value={formData.status}
+                    onChange={e => set('status', e.target.value)}
+                  >
+                    <option value="active">Active</option>
+                    <option value="completed">Completed</option>
+                    <option value="skipped">Skipped</option>
+                  </select>
+               </div>
+             )}
 
-          {/* Dates */}
-          <div className="grid grid-cols-2 gap-4">
+            {/* START DATE */}
             <div>
-               <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">Start (UTC)</label>
+               <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">
+                 {formData.type === 'info' ? 'Date (UTC)' : 'Start (UTC)'}
+               </label>
                <input 
                  type="datetime-local"
                  required
                  className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-xs text-zinc-200"
-                 // Tricky, but datetime-local needs YYYY-MM-DDThh:mm format
                  value={formData.startDate?.slice(0, 16) || ''}
                  onChange={e => set('startDate', new Date(e.target.value).toISOString())}
                />
             </div>
-            <div>
-               <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">End (UTC)</label>
-               <input 
-                 type="datetime-local"
-                 required
-                 className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-xs text-zinc-200"
-                 value={formData.endDate?.slice(0, 16) || ''}
-                 onChange={e => set('endDate', new Date(e.target.value).toISOString())}
-               />
-            </div>
-          </div>
 
-          <div className="pt-4 flex gap-3">
-             <button type="button" onClick={onClose} className="flex-1 py-2 text-sm text-zinc-400 hover:text-white cursor-pointer">Cancel</button>
-             <button type="submit" className={`flex-1 py-2 rounded text-sm font-bold bg-zinc-100 text-black hover:bg-white cursor-pointer`}>
-               {isEditing ? 'Save Changes' : 'Create Event'}
-             </button>
+            {/* ND DATE */}
+            {formData.type !== 'info' && (
+              <div>
+                 <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">End (UTC)</label>
+                 <input 
+                   type="datetime-local"
+                   required
+                   className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-xs text-zinc-200"
+                   value={formData.endDate?.slice(0, 16) || ''}
+                   onChange={e => set('endDate', new Date(e.target.value).toISOString())}
+                 />
+              </div>
+            )}
           </div>
         </form>
       </div>
