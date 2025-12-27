@@ -61,7 +61,7 @@ export default function InfoSidebar({ events, isEditMode, onEdit, onDelete }: In
               {/* Date Header */}
               <div className="flex justify-between items-center text-xs text-gray-500 mb-1">
                 <span>
-                  {start.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
+                  {start.toLocaleDateString('en-US', { day: '2-digit', month: 'short' })}
                 </span>
                 {isToday && <span className="text-green-400 font-bold animate-pulse">TODAY</span>}
               </div>
