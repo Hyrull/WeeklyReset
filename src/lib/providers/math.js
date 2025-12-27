@@ -51,4 +51,4 @@ const getWoWTradingPost = async () => {
   return events
 }
 
-module.exports = { getWoWTradingPost }
+export { getWoWTradingPost }

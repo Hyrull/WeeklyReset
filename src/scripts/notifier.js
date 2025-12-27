@@ -1,11 +1,12 @@
-const fs = require('fs')
-const path = require('path')
-const cron = require('node-cron')
-const FormData = require('form-data')
-const axios = require('axios')
+import { readFileSync, existsSync, createReadStream } from 'fs'
+import path from 'path'
+import { schedule } from 'node-cron'
+import FormData from 'form-data'
+import axios from 'axios'
+import dotenv from 'dotenv'
 
-// Load env vars explicitly since we aren't in Next.js context here
-require('dotenv').config({ path: path.resolve(process.cwd(), '.env.local') })
+// Load env vars
+dotenv.config({ path: path.resolve(process.cwd(), '.env.local') })
 
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL
 const EVENTS_PATH = path.join(process.cwd(), 'data', 'events.json')
@@ -15,7 +16,7 @@ const checkEvents = () => {
   if (!WEBHOOK_URL) return console.error("No Webhook URL found.")
 
   try {
-    const raw = fs.readFileSync(EVENTS_PATH, 'utf-8')
+    const raw = readFileSync(EVENTS_PATH, 'utf-8')
     const events = JSON.parse(raw)
     const now = new Date()
 
@@ -38,7 +39,6 @@ const checkEvents = () => {
       }
 
       // Ends in 3 Days (71h - 72h window)
-      // yes, i'm aware that if the bot is down right during the -71-72h window, it won't notify. well. send a pr
       if (hoursUntilEnd >= 71 && hoursUntilEnd < 72) {
          sendWebhook(event, 'Ending', 0xffa500)
       }
@@ -76,14 +76,13 @@ const sendWebhook = async (event, title, color) => {
   form.append('payload_json', JSON.stringify(embedPayload))
 
   // Attaching file
-  if (fs.existsSync(filePath)) {
-    form.append('file', fs.createReadStream(filePath), fileName)
+  if (existsSync(filePath)) {
+    form.append('file', createReadStream(filePath), fileName)
   } else {
     console.warn(`Logo not found for: ${event.game} (looked for ${fileName})`)
-    // If missing, we just don't attach the file, Discord ignores the thumbnail url
   }
 
-try {
+  try {
     await axios.post(WEBHOOK_URL, form, {
       headers: form.getHeaders()
     })
@@ -94,6 +93,6 @@ try {
 }
 
 // Schedule: Run every hour at minute 0
-cron.schedule('0 * * * *', checkEvents)
+schedule('0 * * * *', checkEvents)
 checkEvents()
 console.log("Discord Notifier booted!")

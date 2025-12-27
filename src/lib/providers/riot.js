@@ -1,5 +1,7 @@
-const path = require('path')
-require('dotenv').config({ path: path.resolve(process.cwd(), '.env.local') })
+import path from 'path'
+import dotenv from 'dotenv'
+
+dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
 const API_KEY = process.env.RIOT_API_KEY
 const REGION = 'eu'
@@ -106,4 +108,4 @@ const getTFTEvents = async () => {
   }
 }
 
-module.exports = { getValorantEvents, getTFTEvents }
+export { getValorantEvents, getTFTEvents }

@@ -1,5 +1,7 @@
-const path = require('path')
-require('dotenv').config({ path: path.resolve(process.cwd(), '.env.local') })
+import path from 'path'
+import dotenv from 'dotenv'
+
+dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
 const CLIENT_ID = process.env.BLIZZARD_CLIENT_ID
 const CLIENT_SECRET = process.env.BLIZZARD_CLIENT_SECRET
@@ -163,4 +165,4 @@ const getDiablo3Events = async () => {
   }]
 }
 
-module.exports = { getHearthstoneEvents, getWoWEvents, getDiablo3Events }
+export { getHearthstoneEvents, getWoWEvents, getDiablo3Events }
