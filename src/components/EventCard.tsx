@@ -5,9 +5,10 @@ import Image from 'next/image'
 interface EventCardProps {
   event: GameEvent
   onUpdate: (id: string, updates: Partial<GameEvent>) => void
+  isEditMode: boolean
 }
 
-export const EventCard = ({ event, onUpdate }: EventCardProps) => {
+export const EventCard = ({ event, onUpdate, isEditMode }: EventCardProps) => {
   const theme = getTheme(event.game)
   const now = new Date()
   const daysLeft = Math.ceil((new Date(event.endDate).getTime() - now.getTime()) / (86400000))
@@ -37,9 +38,10 @@ export const EventCard = ({ event, onUpdate }: EventCardProps) => {
           </div>
           <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">{event.game}</span>
         </div>
+        {!isEditMode ? 
         <span className={`text-sm font-mono font-bold ${isFuture ? 'text-zinc-500' : theme.text}`}>
           {isFuture ? 'SOON' : (daysLeft < 0 ? 'ENDED' : `${daysLeft}d`)}
-        </span>
+        </span> : ''}
       </div>
 
       <div>

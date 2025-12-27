@@ -108,13 +108,13 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {items.map(e => (
             <div key={e.id} className="relative group">
-              <EventCard event={e} onUpdate={handleQuickUpdate} />
+              <EventCard event={e} onUpdate={handleQuickUpdate} isEditMode={isEditMode}/>
               
               {/* EDIT MODE OVERLAY */}
               {isEditMode && (
                 <div className="absolute top-4 right-4 flex gap-2 z-10">
-                   <button onClick={() => openEdit(e)} className="bg-blue-600 text-white text-xs px-3 py-1 rounded shadow hover:bg-blue-500 cursor-pointer">Edit</button>
-                   <button onClick={() => handleDelete(e.id)} className="bg-red-600 text-white text-xs px-3 py-1 rounded shadow hover:bg-red-500 cursor-pointer">Del</button>
+                   <button onClick={() => openEdit(e)} className="bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white p-1 rounded text-xs transition-colors">✎</button>
+                   <button onClick={() => handleDelete(e.id)} className="bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white p-1 rounded text-xs transition-colors">✕</button>
                 </div>
               )}
             </div>
