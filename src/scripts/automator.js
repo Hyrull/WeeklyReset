@@ -1,5 +1,6 @@
 import fs from 'fs/promises'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import { getHearthstoneEvents, getWoWEvents, getDiablo3Events } from '../lib/providers/blizzard.js'
 import { getTFTEvents, getValorantEvents } from '../lib/providers/riot.js'
 import { getWoWTradingPost } from '../lib/providers/math.js'
@@ -66,4 +67,33 @@ const runAutomation = async () => {
   }
 }
 
-runAutomation()
+// --- SELF-SCHEDULING LOGIC ---
+// If run directly (not imported)
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const INTERVAL = 60 * 60 * 1000 // 1 Hour
+
+  const startLoop = async () => {
+    console.log('[Automator] Service started. Running initial check...')
+    
+    // 1. Initial Run
+    try { await runAutomation() } catch (e) { console.error(e) }
+
+    // 2. Schedule Loop
+    console.log(`[Automator] Next update in ${INTERVAL / 60000} minutes.`)
+    setInterval(async () => {
+      try {
+        console.log(`[Automator] Triggering scheduled update...`)
+        await runAutomation()
+      } catch (e) {
+        console.error('[Automator] Update failed:', e)
+      }
+    }, INTERVAL)
+  }
+
+  console.log('[Automator] Booted!');
+
+  // Add a tiny delay if running in dev mode to avoid API spam on restarts
+  setTimeout(startLoop, 5 * 60 * 1000) // 5mn
+}
+
+export { runAutomation }
