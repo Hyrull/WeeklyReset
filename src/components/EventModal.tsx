@@ -14,6 +14,7 @@ interface EventModalProps {
 
 // Hardcoded for now, but could be dynamic
 const TYPES = ['season', 'battlepass', 'event']
+const SORTED_GAMELIST = SUPPORTED_GAMES.sort()
 
 export default function EventModal({ isOpen, onClose, onSave, initialData, isEditing }: EventModalProps) {
   if (!isOpen) return null
@@ -60,7 +61,7 @@ export default function EventModal({ isOpen, onClose, onSave, initialData, isEdi
               value={formData.game}
               onChange={e => set('game', e.target.value)}
             >
-              {SUPPORTED_GAMES.map(g => <option key={g} value={g}>{g}</option>)}
+              {SORTED_GAMELIST.map(g => <option key={g} value={g}>{g}</option>)}
             </select>
           </div>
 

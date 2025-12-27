@@ -24,6 +24,7 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
     fallback: 'bg-amber-700/20',
     logo: '/logos/worldofwarcraft.png'
   },
+  
   'Diablo IV': {
     border: 'border-red-900',
     borderHover: 'hover:border-red-500/50',
@@ -35,6 +36,7 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
     fallback: 'bg-red-500/20',
     logo: '/logos/diabloiv.png'
   },
+
   'Fortnite': {
     border: 'border-cyan-900',
     borderHover: 'hover:border-cyan-500/50',
@@ -46,16 +48,77 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
     fallback: 'bg-cyan-500/20',
     logo: '/logos/fortnite.png'
   },
+
   'Marvel Rivals': {
-    border: 'border-red-700',
-    borderHover: 'hover:border-red-500',
-    borderFocus: 'focus:border-red-500',
-    text: 'text-red-400',
-    bg: 'bg-red-950/20',
-    btn: 'bg-red-600/20 text-red-300 border-red-500/40 hover:bg-red-600/30',
-    badge: 'bg-red-800/50 text-red-200 border-red-600/50',
-    fallback: 'bg-red-700/30',
-    logo: '/logos/marvelrivals.png'
+    border: 'border-yellow-600',
+    borderHover: 'hover:border-yellow-400/50',
+    borderFocus: 'focus:border-yellow-400',
+    text: 'text-yellow-400',
+    bg: 'bg-yellow-900/20',
+    btn: 'bg-yellow-500/10 text-yellow-300 border-yellow-500/20 hover:bg-yellow-500/20',
+    badge: 'bg-yellow-900/40 text-yellow-200 border-yellow-700/50',
+    fallback: 'bg-yellow-600/20',
+    logo: '/logos/marvelrivals.png',
+  },
+
+  'Rocket League': {
+    border: 'border-cyan-500',
+    borderHover: 'hover:border-cyan-300/50',
+    borderFocus: 'focus:border-cyan-300',
+    text: 'text-cyan-400',
+    bg: 'bg-cyan-900/20',
+    btn: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/20 hover:bg-cyan-500/20',
+    badge: 'bg-cyan-900/40 text-cyan-200 border-cyan-700/50',
+    fallback: 'bg-cyan-500/20',
+    logo: '/logos/rocketleague.png',
+  },
+
+  'Valorant': {
+    border: 'border-rose-600',
+    borderHover: 'hover:border-rose-400/50',
+    borderFocus: 'focus:border-rose-500',
+    text: 'text-rose-400',
+    bg: 'bg-rose-900/20',
+    btn: 'bg-rose-500/10 text-rose-300 border-rose-500/20 hover:bg-rose-500/20',
+    badge: 'bg-rose-900/40 text-rose-200 border-rose-700/50',
+    fallback: 'bg-rose-600/20',
+    logo: '/logos/valorant.png'
+  },
+
+  'Teamfight Tactics': {
+    border: 'border-sky-500',
+    borderHover: 'hover:border-sky-300/50',
+    borderFocus: 'focus:border-sky-300',
+    text: 'text-sky-300',
+    bg: 'bg-sky-900/20',
+    btn: 'bg-sky-500/10 text-sky-200 border-sky-500/20 hover:bg-sky-500/20',
+    badge: 'bg-sky-900/40 text-sky-100 border-sky-700/50',
+    fallback: 'bg-sky-500/20',
+    logo: '/logos/teamfighttactics.png'
+  },
+
+  'Sea of Thieves': {
+    border: 'border-emerald-500',
+    borderHover: 'hover:border-emerald-300/50',
+    borderFocus: 'focus:border-emerald-300',
+    text: 'text-emerald-400',
+    bg: 'bg-emerald-900/20',
+    btn: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20 hover:bg-emerald-500/20',
+    badge: 'bg-emerald-900/40 text-emerald-200 border-emerald-700/50',
+    fallback: 'bg-emerald-600/20',
+    logo: '/logos/seaofthieves.png',
+  },
+
+  'Hearthstone': {
+    border: 'border-amber-700',
+    borderHover: 'hover:border-amber-500/50',
+    borderFocus: 'focus:border-amber-500',
+    text: 'text-amber-500',
+    bg: 'bg-amber-900/30',
+    btn: 'bg-amber-600/10 text-amber-400 border-amber-600/20 hover:bg-amber-600/20',
+    badge: 'bg-amber-950/60 text-amber-200 border-amber-800/50',
+    fallback: 'bg-amber-700/20',
+    logo: '/logos/hearthstone.png'
   }
 }
 
