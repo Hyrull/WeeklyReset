@@ -71,10 +71,13 @@ const infoEvents = events
                 <span>
                   {start.toLocaleDateString('en-US', { day: '2-digit', month: 'short' })}
                 </span>
-                {isPastStart ? (
-                  <span className="text-cyan-400 font-bold animate-pulse">JUST OUT!</span>
-                ) : (
-                  <span className="text-gray-600">UPCOMING</span>
+                
+                {!isEditMode && (
+                  isPastStart ? (
+                    <span className="text-cyan-400 font-bold animate-pulse">JUST OUT!</span>
+                  ) : (
+                    <span className="text-gray-600">UPCOMING</span>
+                  )
                 )}
               </div>
 
