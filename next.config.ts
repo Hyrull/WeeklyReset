@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
 
   },
   output: "standalone",
+  allowedDevOrigins: ["192.168.1.*"],
   // 1. Optimize the file watcher
   webpack: (config, { dev }) => {
     if (dev) {
@@ -19,7 +20,7 @@ const nextConfig: NextConfig = {
       };
     }
     return config;
-  },
+  }
 };
 
 export default nextConfig;
