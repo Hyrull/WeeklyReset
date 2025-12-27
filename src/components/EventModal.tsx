@@ -41,15 +41,30 @@ export default function EventModal({ isOpen, onClose, onSave, initialData, isEdi
 
   const theme = getTheme(formData.game || '')
 
-  const handleSubmit = (e: React.FormEvent) => {
+const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Data cleanup for 'info' types
-    const finalData = formData.type === 'info' 
-      ? { ...formData, status: 'active' as const } 
-      : formData
-      
-    onSave(finalData)
-    onClose()
+    
+    // SAFETY FIX: Ensure endDate exists for Info events
+    // If it's an 'info' type and the user didn't pick a date, 
+    // we default to 1 year from now (or any valid date) so the type check passes.
+    let finalEndDate = formData.endDate
+    
+    if (formData.type === 'info' && !finalEndDate) {
+       // Set to 1 year in the future
+       const nextYear = new Date()
+       nextYear.setFullYear(nextYear.getFullYear() + 1)
+       finalEndDate = nextYear.toISOString()
+    }
+    
+    // If it's still missing (user cleared it manually on a 'season'), fallback to now
+    if (!finalEndDate) {
+        finalEndDate = new Date().toISOString()
+    }
+
+    onSave({
+      ...formData,
+      endDate: finalEndDate
+    })
   }
 
   const set = (field: keyof GameEvent, value: string) => {
