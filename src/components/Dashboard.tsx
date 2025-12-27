@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import { GameEvent, SortOption } from '@/types'
 import { EventCard } from '@/components/EventCard'
+import { SUPPORTED_GAMES } from '@/lib/themes'
 import EventModal from '@/components/EventModal'
 import InfoSidebar from '@/components/InfoSidebar'
 import Image from 'next/image'
@@ -18,7 +19,8 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
   // UI State
   const [showSkipped, setShowSkipped] = useState(false)
   const [sortBy, setSortBy] = useState<SortOption>('urgency')
-  
+  const [selectedGame, setSelectedGame] = useState<string>('All')
+
   // Manager Mode State
   const [isEditMode, setIsEditMode] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -75,6 +77,10 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
       e.type !== 'info'
     )
 
+    if (selectedGame !== 'All') {
+      filtered = filtered.filter(e => e.game === selectedGame)
+    }
+
     filtered.sort((a, b) => {
       if (sortBy === 'game') return a.game.localeCompare(b.game)
       if (sortBy === 'startDate') return new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
@@ -94,7 +100,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
     })
 
     return { ongoing, comingSoon, ended }
-  }, [events, showSkipped, sortBy])
+  }, [events, showSkipped, sortBy, selectedGame])
 
   // Helper for Section Rendering
   const Section = ({ title, items, color = 'zinc' }: { title: string, items: GameEvent[], color?: string }) => {
@@ -142,6 +148,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
           </div>
         </div>
 
+
         <div className="flex flex-wrap gap-4 items-center bg-zinc-900 p-2 rounded-lg border border-zinc-800">
           {/* Sort */}
           <div className="flex gap-1 bg-zinc-950 rounded p-1">
@@ -155,9 +162,24 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
               </button>
             ))}
           </div>
-          
+
+            {/* Separator */}
           <div className="w-px h-6 bg-zinc-800 mx-2"></div>
           
+          {/* Game Filter */}
+          <select 
+            value={selectedGame}
+            onChange={(e) => setSelectedGame(e.target.value)}
+            className="bg-zinc-950 text-zinc-400 text-xs border border-zinc-800 rounded px-2 py-1.5 outline-none focus:border-zinc-600 cursor-pointer"
+          >
+            <option value="All">All Games</option>
+            {SUPPORTED_GAMES.sort().map(g => (
+              <option key={g} value={g}>{g}</option>
+            ))}
+          </select>
+
+          <div className="w-px h-6 bg-zinc-800 mx-2"></div>
+
           {/* Toggles */}
           <label className="flex items-center gap-2 text-xs text-zinc-400 cursor-pointer select-none hover:text-zinc-200">
             <input type="checkbox" checked={showSkipped} onChange={e => setShowSkipped(e.target.checked)} className="accent-emerald-500 rounded bg-zinc-800 border-zinc-700 cursor-pointer" />
