@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Weekly Tracker",
+  title: "Weekly Reset",
   description: "FOMO tracker for your gaming chores.",
 };
 
