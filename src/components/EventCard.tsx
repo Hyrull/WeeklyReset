@@ -20,11 +20,12 @@ export const EventCard = ({ event, onUpdate, isEditMode }: EventCardProps) => {
 
   return (
     <div className={`
-      relative p-5 rounded-lg border flex flex-col gap-3 transition-all
+      relative p-5 rounded-lg border flex flex-col gap-2 transition-all h-full
       bg-zinc-900/80 backdrop-blur-sm
       ${isDone ? 'opacity-50 grayscale border-zinc-800' : `${theme.border} ${theme.borderHover} ${theme.bg}`}
     `}>
-      <div className="flex justify-between items-start">
+      {/* Header */}
+      <div className="flex justify-between items-start mb-1">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded bg-zinc-800 overflow-hidden relative">
             <div className={`w-full h-full absolute inset-0 ${theme.fallback}`} /> 
@@ -44,15 +45,21 @@ export const EventCard = ({ event, onUpdate, isEditMode }: EventCardProps) => {
         </span> : ''}
       </div>
 
+      {/* Content Block */}
       <div>
-        <div className="flex items-center gap-2 mb-1">
+        <div className="flex items-center gap-2 mb-3">
           <span className={`text-[10px] uppercase px-1.5 py-0.5 rounded border ${theme.badge}`}>{event.type}</span>
           {isSkipped && <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-red-900/30 text-red-500 border border-red-900/50">Skipped</span>}
           {isCompleted && <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-emerald-900/30 text-emerald-500 border border-emerald-900/50">Done</span>}
         </div>
-        <h3 className="text-lg font-medium leading-tight">{event.title}</h3>
+        
+        {/* Title: Fixed Height maintained */}
+        <h3 className="text-lg font-medium leading-tight h-[42px] overflow-hidden" title={event.title}>
+          {event.title}
+        </h3>
       </div>
 
+      {/* Notes Input */}
       {!isDone && (
         <textarea 
           placeholder="+ Add notes..." 
@@ -62,7 +69,8 @@ export const EventCard = ({ event, onUpdate, isEditMode }: EventCardProps) => {
         />
       )}
 
-      <div className="mt-auto pt-3 flex gap-2">
+      {/* Footer: Removed pt-3 to reduce 'awkward space' below notes */}
+      <div className="mt-auto flex gap-2">
         {!isDone && !isFuture && (
           <>
             <button onClick={() => onUpdate(event.id, { status: 'completed' })} className={`flex-1 py-1.5 text-xs rounded border transition-colors font-medium ${theme.btn} cursor-pointer`}>Complete</button>
