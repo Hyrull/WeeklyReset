@@ -92,21 +92,21 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
     borderFocus: 'focus:border-rose-500',
     text: 'text-rose-400',
     bg: 'bg-rose-900/20',
-    btn: 'bg-rose-500/10 text-rose-300 border-rose-500/20 hover:bg-rose-500/20',
-    badge: 'bg-rose-900/40 text-rose-200 border-rose-700/50',
-    fallback: 'bg-rose-600/20',
+    btn: 'bg-rose-600 text-white border-rose-700 hover:bg-rose-500',
+    badge: 'bg-rose-950 text-rose-300 border-rose-800',
+    fallback: 'bg-zinc-900',
     logo: '/logos/valorant.png'
   },
 
   'Teamfight Tactics': {
-    border: 'border-sky-500',
-    borderHover: 'hover:border-sky-300/50',
-    borderFocus: 'focus:border-sky-300',
-    text: 'text-sky-300',
-    bg: 'bg-sky-900/20',
-    btn: 'bg-sky-500/10 text-sky-200 border-sky-500/20 hover:bg-sky-500/20',
-    badge: 'bg-sky-900/40 text-sky-100 border-sky-700/50',
-    fallback: 'bg-sky-500/20',
+    border: 'border-amber-400',
+    borderHover: 'hover:border-amber-200',
+    borderFocus: 'focus:border-amber-300',
+    text: 'text-amber-200',
+    bg: 'bg-slate-900',
+    btn: 'bg-amber-600/20 text-amber-200 border-amber-500/50 hover:bg-amber-600/40',
+    badge: 'bg-amber-950 text-amber-300 border-amber-800',
+    fallback: 'bg-slate-900',
     logo: '/logos/teamfighttactics.png'
   },
 

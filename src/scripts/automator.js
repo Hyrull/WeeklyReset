@@ -1,6 +1,7 @@
 import fs from 'fs/promises'
 import path from 'path'
 import { getHearthstoneEvents, getWoWEvents, getDiablo3Events } from '../lib/providers/blizzard.js'
+import { getTFTEvents, getValorantEvents } from '../lib/providers/riot.js'
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'events.json')
 
@@ -11,8 +12,10 @@ const runAutomation = async () => {
   const hsEvents = await getHearthstoneEvents()
   const wowEvents = await getWoWEvents()
   const d3Events = await getDiablo3Events()
+  const valoEvents = await getValorantEvents()
+  const TFTEvents = await getTFTEvents()
   
-  const incomingEvents = [...hsEvents, ...wowEvents, ...d3Events]
+  const incomingEvents = [...hsEvents, ...wowEvents, ...d3Events, ...valoEvents, ...TFTEvents]
   
   if (incomingEvents.length === 0) {
     console.log('[Automator] No new data fetched. Exiting.')

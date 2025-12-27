@@ -147,8 +147,8 @@ const getDiablo3Events = async () => {
 
   const currentId = indexData.current_season
   
-  const startTime = detailData?.start_date 
-    ? new Date(detailData.start_date).toISOString() 
+  const startTime = indexData.start_date 
+    ? new Date(indexData.start_date).toISOString() 
     : new Date().toISOString() // Fallback if missing
 
   return [{
