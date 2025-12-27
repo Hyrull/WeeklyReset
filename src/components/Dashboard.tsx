@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import { GameEvent, SortOption } from '@/types'
 import { EventCard } from '@/components/EventCard'
 import EventModal from '@/components/EventModal'
+import InfoSidebar from '@/components/InfoSidebar'
 import Image from 'next/image'
 
 
@@ -69,7 +70,10 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
   // --- PROCESSING ---
   const processedData = useMemo(() => {
     const now = new Date()
-    let filtered = events.filter(e => showSkipped || e.status !== 'skipped')
+    let filtered = events.filter(e => 
+      (showSkipped || e.status !== 'skipped') && 
+      e.type !== 'info'
+    )
 
     filtered.sort((a, b) => {
       if (sortBy === 'game') return a.game.localeCompare(b.game)
@@ -101,7 +105,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
            {title === 'Ongoing' && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>}
            {title}
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {items.map(e => (
             <div key={e.id} className="relative group">
               <EventCard event={e} onUpdate={handleQuickUpdate} />
@@ -180,14 +184,29 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
       )}
 
       {/* CONTENT */}
-      <div className="space-y-12">
-        <Section title="Ongoing" items={processedData.ongoing} color="zinc" />
-        <Section title="Incoming" items={processedData.comingSoon} color="zinc" />
-        <Section title="Ended" items={processedData.ended} color="zinc" />
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
         
-        {processedData.ongoing.length === 0 && processedData.comingSoon.length === 0 && (
-          <div className="text-center py-20 text-zinc-600 italic">No active chores found. Time to play?</div>
-        )}
+        {/* Main Tasks (3/4 space) */}
+        <div className="lg:col-span-3 space-y-12">
+          <Section title="Ongoing" items={processedData.ongoing} color="zinc" />
+          <Section title="Incoming" items={processedData.comingSoon} color="zinc" />
+          <Section title="Ended" items={processedData.ended} color="zinc" />
+          
+          {processedData.ongoing.length === 0 && processedData.comingSoon.length === 0 && (
+            <div className="text-center py-20 text-zinc-600 italic">No active chores found. Time to play?</div>
+          )}
+        </div>
+
+        {/* Sidebar (1/4 space) */}
+        <div className="lg:col-span-1 w-full sticky top-8">
+           <InfoSidebar 
+             events={events}
+             isEditMode={isEditMode}
+             onEdit={openEdit}
+             onDelete={handleDelete}
+           />
+        </div>
+
       </div>
 
       {/* MODAL */}

@@ -9,7 +9,7 @@ const DB_PATH = path.join(process.cwd(), 'data', 'events.json')
 export const EventSchema = z.object({
   id: z.string(),
   game: z.string(),
-  type: z.enum(['season', 'battlepass', 'event']),
+  type: z.enum(['season', 'battlepass', 'event', 'info']),
   title: z.string(),
   startDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
     message: "Invalid start date format",

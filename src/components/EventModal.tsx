@@ -13,7 +13,7 @@ interface EventModalProps {
 }
 
 // Hardcoded for now, but could be dynamic
-const TYPES = ['season', 'battlepass', 'event']
+const TYPES = ['season', 'battlepass', 'event', 'info']
 const SORTED_GAMELIST = SUPPORTED_GAMES.sort()
 
 export default function EventModal({ isOpen, onClose, onSave, initialData, isEditing }: EventModalProps) {
