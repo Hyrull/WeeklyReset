@@ -9,17 +9,26 @@ interface InfoSidebarProps {
 }
 
 export default function InfoSidebar({ events, isEditMode, onEdit, onDelete }: InfoSidebarProps) {
-  const infoEvents = events
-    .filter(e => e.type === 'info')
-    .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+  const now = new Date()
+  const oneWeekMs = 7 * 24 * 60 * 60 * 1000
 
+const infoEvents = events
+    .filter(e => {
+       if (e.type !== 'info') return false
+       
+       // we're keeping stuff 7 days after it ended. so we can show the recently released stuff
+       const end = new Date(e.endDate)
+       const expirationDate = new Date(end.getTime() + oneWeekMs)
+       
+       return now < expirationDate
+    })
+    .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
   if (infoEvents.length === 0) return null
 
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-lg font-bold text-gray-400 border-b border-gray-800 pb-2 flex justify-between items-center">
         <span>Upcoming / News</span>
-        {/* Optional: Counter */}
         <span className="text-xs bg-gray-800 px-2 py-0.5 rounded text-gray-500">{infoEvents.length}</span>
       </h2>
       
@@ -27,12 +36,11 @@ export default function InfoSidebar({ events, isEditMode, onEdit, onDelete }: In
         {infoEvents.map(event => {
           const theme = getTheme(event.game)
           const start = new Date(event.startDate)
-          const isToday = start.toDateString() === new Date().toDateString()
+          const isPastStart = now >= start
 
           return (
             <div 
               key={event.id}
-              // Add 'group' so we can do hover effects if needed
               className={`
                 relative p-3 rounded-lg border-l-4 bg-gray-900/40 
                 ${theme.border} ${theme.borderHover} transition-colors group
@@ -63,7 +71,11 @@ export default function InfoSidebar({ events, isEditMode, onEdit, onDelete }: In
                 <span>
                   {start.toLocaleDateString('en-US', { day: '2-digit', month: 'short' })}
                 </span>
-                {isToday && <span className="text-green-400 font-bold animate-pulse">TODAY</span>}
+                {isPastStart ? (
+                  <span className="text-cyan-400 font-bold animate-pulse">JUST OUT!</span>
+                ) : (
+                  <span className="text-gray-600">UPCOMING</span>
+                )}
               </div>
 
               {/* Game & Title */}
