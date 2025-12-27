@@ -24,6 +24,19 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
     fallback: 'bg-amber-700/20',
     logo: '/logos/worldofwarcraft.png'
   },
+
+  'Diablo III': {
+    // Reaper of Souls color scheme to differentiate with Diablo IV
+    border: 'border-cyan-900',
+    borderHover: 'hover:border-cyan-500/50',
+    borderFocus: 'focus:border-cyan-400',
+    text: 'text-cyan-300',
+    bg: 'bg-zinc-850',
+    btn: 'bg-cyan-950/50 text-cyan-400 border-cyan-900 hover:bg-cyan-900/80 hover:text-cyan-200 hover:border-cyan-500/30',
+    badge: 'bg-zinc-900 text-cyan-400 border-cyan-900/60',
+    fallback: 'bg-zinc-900',
+    logo: '/logos/diabloiii.png'
+  },
   
   'Diablo IV': {
     border: 'border-red-900',
