@@ -8,13 +8,12 @@ import { getWoWTradingPost } from '../lib/providers/math.js'
 const DATA_FILE = path.join(process.cwd(), 'data', 'events.json')
 
 const runAutomation = async () => {
-  console.log('[Automator] Started...')
 
   // Fetch Fresh Data
   const hsEvents = await getHearthstoneEvents()
   const wowEvents = await getWoWEvents()
   const d3Events = await getDiablo3Events()
-  const valoEvents = await getValorantEvents()
+  // const valoEvents = await getValorantEvents()
   const TFTEvents = await getTFTEvents()
   const wowTradingPost = await getWoWTradingPost()
   
@@ -22,7 +21,7 @@ const runAutomation = async () => {
     ...(hsEvents || []), 
     ...(wowEvents || []), 
     ...(d3Events || []), 
-    ...(valoEvents || []), 
+    // ...(valoEvents || []), 
     ...(TFTEvents || []), 
     ...(wowTradingPost || [])
   ]
@@ -82,7 +81,6 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     console.log(`[Automator] Next update in ${INTERVAL / 60000} minutes.`)
     setInterval(async () => {
       try {
-        console.log(`[Automator] Triggering scheduled update...`)
         await runAutomation()
       } catch (e) {
         console.error('[Automator] Update failed:', e)
