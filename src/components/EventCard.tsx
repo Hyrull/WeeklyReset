@@ -21,7 +21,7 @@ export const EventCard = ({ event, onUpdate, isEditMode }: EventCardProps) => {
   return (
     <div className={`
       relative p-5 rounded-lg border flex flex-col gap-2 transition-all h-full
-      bg-zinc-900/80 backdrop-blur-sm
+      backdrop-blur-sm
       ${isDone ? 'opacity-50 grayscale border-zinc-800' : `${theme.border} ${theme.borderHover} ${theme.bg}`}
     `}>
       {/* Header */}
