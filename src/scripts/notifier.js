@@ -51,7 +51,7 @@ const checkEvents = () => {
 
 const sendWebhook = async (event, title, color) => {
   // "Diablo IV" -> "diabloiv"
-  const cleanName = event.game.replace(/['\s]/g, '').toLowerCase()
+  const cleanName = event.game.replace(/['\s:!]/g, '').toLowerCase()
   const fileName = `${cleanName}.png`
   const filePath = path.join(LOGOS_DIR, fileName)
 

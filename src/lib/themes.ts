@@ -132,6 +132,54 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
     badge: 'bg-amber-950/60 text-amber-200 border-amber-800/50',
     fallback: 'bg-amber-700/20',
     logo: '/logos/hearthstone.png'
+  },
+
+  'Pokémon TCG Pocket': {
+    border: 'border-cyan-700',
+    borderHover: 'hover:border-cyan-500',
+    borderFocus: 'focus:border-cyan-400',
+    text: 'text-cyan-100',
+    bg: 'bg-slate-950',
+    btn: 'bg-cyan-900/40 text-cyan-200 border-cyan-800 hover:bg-cyan-800/60',
+    badge: 'bg-cyan-950 text-cyan-300 border-cyan-800',
+    fallback: 'bg-slate-900',
+    logo: '/logos/pokemontcgpocket.png'
+  },
+
+  'Pokémon GO': {
+    border: 'border-emerald-600',
+    borderHover: 'hover:border-emerald-400',
+    borderFocus: 'focus:border-emerald-500',
+    text: 'text-emerald-100',
+    bg: 'bg-zinc-900',
+    btn: 'bg-emerald-900/40 text-emerald-200 border-emerald-800 hover:bg-emerald-800/60',
+    badge: 'bg-emerald-950 text-emerald-300 border-emerald-800',
+    fallback: 'bg-emerald-950',
+    logo: '/logos/pokémongo.png'
+  },
+
+  'Honkai: Star Rail': {
+    border: 'border-indigo-500',
+    borderHover: 'hover:border-amber-400',
+    borderFocus: 'focus:border-indigo-400',
+    text: 'text-amber-100',
+    bg: 'bg-[#0f1016]',
+    btn: 'bg-indigo-900/40 text-amber-200 border-indigo-700 hover:bg-indigo-800/60',
+    badge: 'bg-indigo-950 text-amber-300 border-indigo-800',
+    fallback: 'bg-slate-950',
+    logo: '/logos/honkaistarrail.png'
+  },
+
+  'Hatsune Miku: Colorful Stage!': {
+    border: 'border-teal-400',
+    borderHover: 'hover:border-pink-400',
+    borderFocus: 'focus:border-teal-300',
+    text: 'text-teal-100',
+    bg: 'bg-zinc-900',
+    btn: 'bg-teal-900/40 text-teal-200 border-teal-700 hover:bg-teal-800/60',
+    badge: 'bg-teal-950 text-teal-300 border-teal-800',
+    fallback: 'bg-zinc-900',
+    logo: '/logos/hatsunemikucolorfulstage.png'
   }
 }
 
