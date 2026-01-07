@@ -12,6 +12,14 @@ interface EventModalProps {
   isEditing?: boolean
 }
 
+const toLocalISOString = (dateString?: string) => {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  const offset = date.getTimezoneOffset() * 60000
+  const localDate = new Date(date.getTime() - offset)
+  return localDate.toISOString().slice(0, 16)
+}
+
 const TYPES = ['season', 'battlepass', 'event', 'info']
 const SORTED_GAMELIST = SUPPORTED_GAMES.sort()
 
@@ -149,29 +157,29 @@ const handleSubmit = (e: React.FormEvent) => {
 
             {/* START DATE */}
             <div>
-               <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">
-                 {formData.type === 'info' ? 'Date (UTC)' : 'Start (UTC)'}
-               </label>
-               <input 
-                 type="datetime-local"
-                 required
-                 className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-xs text-zinc-200"
-                 value={formData.startDate?.slice(0, 16) || ''}
-                 onChange={e => set('startDate', new Date(e.target.value).toISOString())}
-               />
+              <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">
+                {formData.type === 'info' ? 'Date (UTC)' : 'Start (Local)'}
+              </label>
+              <input 
+                type="datetime-local"
+                required
+                className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-xs text-zinc-200"
+                value={toLocalISOString(formData.startDate)}
+                onChange={e => set('startDate', new Date(e.target.value).toISOString())}
+              />
             </div>
 
-            {/* END DATE (Hidden for Info) */}
+            {/* END DATE */}
             {formData.type !== 'info' && (
               <div>
-                 <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">End (UTC)</label>
-                 <input 
-                   type="datetime-local"
-                   required
-                   className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-xs text-zinc-200"
-                   value={formData.endDate?.slice(0, 16) || ''}
-                   onChange={e => set('endDate', new Date(e.target.value).toISOString())}
-                 />
+                <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">End (Local)</label>
+                <input 
+                  type="datetime-local"
+                  required
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-xs text-zinc-200"
+                  value={toLocalISOString(formData.endDate)}
+                  onChange={e => set('endDate', new Date(e.target.value).toISOString())}
+                />
               </div>
             )}
           </div>
