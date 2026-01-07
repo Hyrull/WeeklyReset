@@ -72,7 +72,9 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
   // --- PROCESSING ---
   const processedData = useMemo(() => {
     const now = new Date()
-    let filtered = events.filter(e => 
+    let filtered = events
+    .filter(e => e.id) // Bypassing any event that has no ID (json corruption)
+    .filter(e => 
       (showSkipped || e.status !== 'skipped' && e.status !== 'completed') && 
       e.type !== 'info'
     )
