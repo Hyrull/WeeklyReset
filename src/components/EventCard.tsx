@@ -53,7 +53,7 @@ export const EventCard = ({ event, onUpdate, isEditMode }: EventCardProps) => {
           {isCompleted && <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-emerald-900/30 text-emerald-500 border border-emerald-900/50">Done</span>}
         </div>
         
-        {/* Title: Fixed Height maintained */}
+        {/* Title */}
         <h3 className="text-lg font-medium leading-tight h-[42px] overflow-hidden" title={event.title}>
           {event.title}
         </h3>
@@ -69,7 +69,7 @@ export const EventCard = ({ event, onUpdate, isEditMode }: EventCardProps) => {
         />
       )}
 
-      {/* Footer: Removed pt-3 to reduce 'awkward space' below notes */}
+      {/* Footer */}
       <div className="mt-auto flex gap-2">
         {!isDone && !isFuture && (
           <>

@@ -12,7 +12,7 @@ export default function InfoSidebar({ events, isEditMode, onEdit, onDelete }: In
   const now = new Date()
   const oneWeekMs = 7 * 24 * 60 * 60 * 1000
 
-const infoEvents = events
+  const infoEvents = events
     .filter(e => {
        if (e.type !== 'info') return false
        
@@ -37,6 +37,21 @@ const infoEvents = events
           const theme = getTheme(event.game)
           const start = new Date(event.startDate)
           const isPastStart = now >= start
+
+          // --- COUNTDOWN Helper Method ---
+          // This is just used for the "in x days" top right corner
+          let timeString = ''
+          if (!isPastStart) {
+             const msLeft = start.getTime() - now.getTime()
+             const days = Math.floor(msLeft / (1000 * 60 * 60 * 24))
+             const hours = Math.floor((msLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+             const minutes = Math.ceil((msLeft % (1000 * 60 * 60)) / (1000 * 60))
+
+             if (days > 0) timeString = `in ${days}d`
+             else if (hours > 0) timeString = `in ${hours}h`
+             else timeString = `in ${minutes}m`
+          }
+          // -----------------------
 
           return (
             <div 
@@ -76,7 +91,7 @@ const infoEvents = events
                   isPastStart ? (
                     <span className="text-cyan-400 font-bold animate-pulse">JUST OUT!</span>
                   ) : (
-                    <span className="text-gray-600">UPCOMING</span>
+                    <span className="text-zinc-400 font-mono tracking-tighter">{timeString}</span>
                   )
                 )}
               </div>
