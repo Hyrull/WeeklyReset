@@ -73,7 +73,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
   const processedData = useMemo(() => {
     const now = new Date()
     let filtered = events.filter(e => 
-      (showSkipped || e.status !== 'skipped') && 
+      (showSkipped || e.status !== 'skipped' && e.status !== 'completed') && 
       e.type !== 'info'
     )
 
@@ -183,7 +183,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
           {/* Toggles */}
           <label className="flex items-center gap-2 text-xs text-zinc-400 cursor-pointer select-none hover:text-zinc-200">
             <input type="checkbox" checked={showSkipped} onChange={e => setShowSkipped(e.target.checked)} className="accent-emerald-500 rounded bg-zinc-800 border-zinc-700 cursor-pointer" />
-            Show Skipped
+            Show Completed
           </label>
 
           <div className="w-px h-6 bg-zinc-800 mx-2"></div>
