@@ -179,8 +179,21 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
     btn: 'bg-teal-900/40 text-teal-200 border-teal-700 hover:bg-teal-800/60',
     badge: 'bg-teal-950 text-teal-300 border-teal-800',
     fallback: 'bg-zinc-900',
-    logo: '/logos/hatsunemikucolorfulstage.png'
-  }
+    logo: '/logos/hatsu,nemikucolorfulstage.png'
+  },
+
+  // Neutral
+  'General Gaming': {
+    border: 'border-zinc-600',
+    borderHover: 'hover:border-zinc-400',
+    borderFocus: 'focus:border-zinc-300',
+    text: 'text-zinc-200',
+    bg: 'bg-zinc-900/50',
+    btn: 'bg-zinc-800 text-zinc-200 border-zinc-700 hover:bg-zinc-700 hover:text-white',
+    badge: 'bg-zinc-950 text-zinc-400 border-zinc-800',
+    fallback: 'bg-zinc-800',
+    logo: '/logos/generalgaming.png'
+  },
 }
 
 export const getTheme = (gameName: string): ThemeClasses => {
