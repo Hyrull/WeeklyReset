@@ -19,6 +19,8 @@ export interface GameEvent {
   endDate: string
   status: 'active' | 'completed' | 'skipped'
   notes?: string
+  hasNotifiedStart?: boolean
+  hasNotifiedEnd?: boolean
 }
 
 export type SortOption = 'urgency' | 'game' | 'startDate'
