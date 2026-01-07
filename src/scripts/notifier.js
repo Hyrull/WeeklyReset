@@ -35,7 +35,11 @@ const checkEvents = () => {
 
       // Event Just Started (within last hour)
       if (hoursSinceStart >= 0 && hoursSinceStart < 1) {
-         sendWebhook(event, 'Starting', 0xffffff)
+         if (event.type === 'info') {
+              sendWebhook(event, 'News', 0x00b0f4)
+          } else {
+              sendWebhook(event, 'Starting', 0xffffff)
+          }
       }
 
       // Ends in 3 Days (71h - 72h window)
