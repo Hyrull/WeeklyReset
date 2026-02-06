@@ -13,7 +13,7 @@ export interface ThemeClasses {
 export interface GameEvent {
   id: string
   game: string
-  type: 'season' | 'battlepass' | 'event' | 'info'
+  type: 'season' | 'battlepass' | 'event' | 'info' | 'backlog'
   title: string
   startDate: string
   endDate: string

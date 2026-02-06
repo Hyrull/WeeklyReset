@@ -77,6 +77,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
     .filter(e => 
       (showSkipped || e.status !== 'skipped' && e.status !== 'completed') && 
       e.type !== 'info'
+      && e.type !== 'backlog'
     )
 
     if (selectedGame !== 'All') {
@@ -228,6 +229,7 @@ export default function Dashboard({ initialEvents }: DashboardProps) {
              isEditMode={isEditMode}
              onEdit={openEdit}
              onDelete={handleDelete}
+             onUpdate={handleQuickUpdate}
            />
         </div>
 

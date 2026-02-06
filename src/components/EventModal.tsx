@@ -20,7 +20,7 @@ const toLocalISOString = (dateString?: string) => {
   return localDate.toISOString().slice(0, 16)
 }
 
-const TYPES = ['season', 'battlepass', 'event', 'info']
+const TYPES = ['season', 'battlepass', 'event', 'info', 'backlog']
 const SORTED_GAMELIST = SUPPORTED_GAMES.sort()
 
 export default function EventModal({ isOpen, onClose, onSave, initialData, isEditing }: EventModalProps) {
@@ -55,13 +55,22 @@ const handleSubmit = (e: React.FormEvent) => {
     // SAFETY FIX: Ensure endDate exists for Info events
     // If it's an 'info' type and the user didn't pick a date, 
     // we default to 1 year from now (or any valid date) so the type check passes.
+    let startDate = formData.startDate
     let finalEndDate = formData.endDate
-    
+
     if (formData.type === 'info' && !finalEndDate) {
        // Set to 1 year in the future
        const nextYear = new Date()
        nextYear.setFullYear(nextYear.getFullYear() + 1)
        finalEndDate = nextYear.toISOString()
+    }
+
+    if (formData.type === 'backlog') {
+      // Start = Now (so it sorts correctly)
+      if (!startDate) startDate = new Date().toISOString()
+      
+      // End = Forever (so it doesn't expire)
+      if (!finalEndDate) finalEndDate = new Date('2099-12-31').toISOString()
     }
     
     // If it's still missing (user cleared it manually on a 'season'), fallback to now
@@ -139,8 +148,8 @@ const handleSubmit = (e: React.FormEvent) => {
                 </select>
              </div>
              
-             {/* STATUS (Hidden for Info) */}
-             {formData.type !== 'info' && (
+             {/* STATUS (Hidden for Info & backlog) */}
+             {formData.type !== 'info' && formData.type !== 'backlog' && (
                <div>
                   <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">Status</label>
                   <select 
@@ -170,7 +179,7 @@ const handleSubmit = (e: React.FormEvent) => {
             </div>
 
             {/* END DATE */}
-            {formData.type !== 'info' && (
+            {formData.type !== 'info' && formData.type !== 'backlog' && (
               <div>
                 <label className="block text-xs font-bold text-zinc-500 uppercase mb-1">End (Local)</label>
                 <input 
