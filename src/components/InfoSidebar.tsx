@@ -13,13 +13,14 @@ export default function InfoSidebar({ events, isEditMode, onEdit, onDelete }: In
   const oneWeekMs = 7 * 24 * 60 * 60 * 1000
 
   const infoEvents = events
-    .filter(e => {
+  .filter(e => {
        if (e.type !== 'info') return false
        
-       // we're keeping stuff 7 days after it ended. so we can show the recently released stuff
-       const end = new Date(e.endDate)
-       const expirationDate = new Date(end.getTime() + oneWeekMs)
+       // If it released > 7 days ago, we hide it
+       const start = new Date(e.startDate)
+       const expirationDate = new Date(start.getTime() + oneWeekMs)
        
+       // Keep only fresh news, and upcoming stuff
        return now < expirationDate
     })
     .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
