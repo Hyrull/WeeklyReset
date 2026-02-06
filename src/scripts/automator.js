@@ -90,8 +90,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
 
   console.log('[Automator] Booted!');
 
-  // Add a tiny delay if running in dev mode to avoid API spam on restarts
-  setTimeout(startLoop, 5 * 60 * 1000) // 5mn
+  setTimeout(startLoop) 
 }
 
 export { runAutomation }

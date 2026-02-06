@@ -182,6 +182,18 @@ const GAME_THEMES: Record<string, ThemeClasses> = {
     logo: '/logos/hatsu,nemikucolorfulstage.png'
   },
 
+  'ARC Raiders': {
+    border: 'border-cyan-700',
+    borderHover: 'hover:border-red-500',
+    borderFocus: 'focus:border-yellow-400',
+    text: 'text-amber-100',
+    bg: 'bg-stone-900',
+    btn: 'bg-stone-800 text-cyan-200 border-cyan-800 hover:bg-cyan-900/40 hover:text-white',
+    badge: 'bg-emerald-950 text-emerald-400 border-emerald-800',
+    fallback: 'bg-stone-950',
+    logo: '/logos/arcraiders.png'
+  },
+
   // Neutral
   'General Gaming': {
     border: 'border-zinc-600',
